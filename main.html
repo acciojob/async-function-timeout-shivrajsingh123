@@ -1,20 +1,57 @@
 <!DOCTYPE html>
-
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Function with Timeout</title>
     <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <!-- the entire body must be written by student -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
     <form onsubmit="return false">
-      <input type="text" id="text" placeholder="Text" />
-      <input type="number" id="delay" placeholder="Delay" />
-      <button type="button" id="btn">Submit</button>
+        <input type="text" id="text" placeholder="Text" />
+        <input type="number" id="delay" placeholder="Delay" />
+        <button type="button" id="btn">Submit</button>
     </form>
-
     <div id="output"></div>
-
+    
     <script type="text/javascript" src="./script.js"></script>
-  </body>
+    <script>
+        function delayMessage(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        document.getElementById("btn").addEventListener("click", async () => {
+            const text = document.getElementById("text").value;
+            const delay = parseInt(document.getElementById("delay").value, 10);
+            const outputDiv = document.getElementById("output");
+            
+            outputDiv.textContent = ""; // Clear previous message
+            
+            if (!text || isNaN(delay) || delay < 0) {
+                outputDiv.textContent = "Please enter valid text and delay.";
+                outputDiv.style.color = "red";
+                return;
+            }
+            
+            await delayMessage(delay);
+            outputDiv.textContent = text;
+            outputDiv.style.color = "green";
+        });
+    </script>
+</body>
 </html>
